@@ -1,0 +1,120 @@
+/* css/responsive.css */
+
+/* Mobile-First Approach */
+/* Estilos para dispositivos pequeños (hasta 767px) */
+@media (max-width: 767px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .main-nav {
+        width: 100%;
+        display: none; /* Ocultar por defecto para el menú hamburguesa */
+        flex-direction: column;
+        background-color: var(--white);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        box-shadow: var(--shadow-md);
+        padding: var(--spacing-md);
+        border-top: 1px solid var(--border-color);
+    }
+
+    .main-nav.active {
+        display: flex;
+    }
+
+    .main-nav .nav-list {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .main-nav .nav-list a {
+        padding: var(--spacing-sm) 0;
+        width: 100%;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .search-bar {
+        flex-grow: 1;
+        margin-right: var(--spacing-md);
+    }
+
+    .menu-toggle {
+        display: block; /* Mostrar el botón de menú hamburguesa */
+    }
+
+    .hero-section {
+        height: 300px; /* Ajusta la altura del carrusel para móviles */
+    }
+
+    .carousel-caption h2 {
+        font-size: 2em;
+    }
+
+    .carousel-caption p {
+        font-size: 1em;
+    }
+
+    .carousel-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+        padding: var(--spacing-sm);
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-section {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .footer-section ul {
+        padding: 0;
+    }
+}
+
+/* Tablet (768px a 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Dos columnas */
+    }
+
+    .header-actions {
+        gap: var(--spacing-md);
+    }
+    
+    .search-bar {
+        width: auto;
+        flex-grow: 0;
+    }
+}
+
+/* Desktop (1024px y más) */
+@media (min-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Tres o cuatro columnas */
+    }
+}
+
+/* Desktop Large (1200px y más) */
+@media (min-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr); /* Cuatro columnas fijas */
+    }
+}
