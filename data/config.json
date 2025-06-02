@@ -1,0 +1,50 @@
+{
+    "siteName": "CelularMania",
+    "contactEmail": "info@celularmania.com",
+    "contactPhone": "+573201234567",
+    "address": "Popayán, Cauca, Colombia",
+    "banners": [
+        {
+            "id": "banner1",
+            "title": "¡Novedad! iPhone 15 Pro Max",
+            "description": "Experimenta la potencia y la innovación. ¡Disponible ahora!",
+            "imageUrl": "images/banners/banner-iphone15.jpg",
+            "link": "#celulares?product=ip15promax",
+            "buttonText": "Ver Detalles"
+        },
+        {
+            "id": "banner2",
+            "title": "Ofertas Exclusivas de Samsung",
+            "description": "Descubre los mejores Galaxy con descuentos increíbles.",
+            "imageUrl": "images/banners/banner-samsung.jpg",
+            "link": "#celulares?brand=Samsung",
+            "buttonText": "Comprar Ahora"
+        },
+        {
+            "id": "banner3",
+            "title": "Accesorios Indispensables",
+            "description": "Todo lo que necesitas para tu móvil, desde audífonos hasta smartwatches.",
+            "imageUrl": "images/banners/banner-accessories.jpg",
+            "link": "#accesorios",
+            "buttonText": "Explorar Accesorios"
+        }
+    ],
+    "brands": [
+        {
+            "name": "Apple",
+            "logoUrl": "images/icons/apple-logo.svg"
+        },
+        {
+            "name": "Samsung",
+            "logoUrl": "images/icons/samsung-logo.svg"
+        },
+        {
+            "name": "Xiaomi",
+            "logoUrl": "images/icons/xiaomi-logo.svg"
+        },
+        {
+            "name": "Google",
+            "logoUrl": "images/icons/google-logo.svg"
+        }
+    ]
+}
