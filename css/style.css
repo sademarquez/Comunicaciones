@@ -1,0 +1,252 @@
+/* Estilos CSS personalizados para la Campaña de Ximena Lopez Yule */
+
+/* Variables CSS para la paleta de colores */
+:root {
+    --color-purple-dark: #4a148c; /* Morado muy oscuro (ej. para texto principal, footer) */
+    --color-purple-gradient-start: #6c2493; /* Morado base para gradiente y elementos interactivos */
+    --color-purple-gradient-end: #9747ff; /* Morado claro para gradiente, acentos y hover */
+    --color-purple-translucent-dark: rgba(74, 20, 140, 0.85); /* Fondo Header, Footer, Chatbot Header (85% opacidad) */
+    --color-purple-translucent-medium: rgba(108, 36, 147, 0.7); /* Background Hero Overlay (70% opacidad) */
+    --color-purple-translucent-light: rgba(171, 134, 255, 0.15); /* Secciones claras (15% opacidad) */
+    --color-golden: #facc15; /* Dorado suave (ej. para títulos y acentos) */
+    --color-golden-dark: #eab308; /* Dorado más intenso para hover */
+    --color-white-translucent: rgba(255, 255, 255, 0.9); /* Header Scrolled, Chatbot Container, Hero Card (90% opacidad) */
+    --color-white-translucent-medium: rgba(255, 255, 255, 0.7); /* Secciones About, Events, Contact (70% opacidad) */
+    --color-white: #ffffff; /* Blanco puro */
+    --color-gray-700: #4a5568; /* Gris oscuro para texto estándar (Tailwind default) - Asegura que este no sea muy claro */
+    --color-text-base: #333333; /* Color base para el texto del body si no se especifica otro */
+}
+
+/* Estilos Generales */
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    color: var(--color-text-base); /* Color de texto base APLICADO AQUÍ (gris oscuro) */
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden; /* Evita el scroll horizontal en caso de desbordamiento */
+    background-color: #f7f7f7; /* Un fondo ligeramente gris para el body general */
+}
+
+/* Aplicar la fuente Poppins a todos los títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Overlay de fondo con gradiente */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradiente con los morados de la paleta */
+    background: linear-gradient(135deg, var(--color-purple-gradient-start) 0%, var(--color-purple-gradient-end) 100%);
+    opacity: 0.8;
+    z-index: -1;
+}
+
+/* Estilos del Header */
+header {
+    background-color: var(--color-purple-translucent-dark); /* Fondo morado oscuro transparente al inicio */
+    backdrop-filter: blur(8px); /* Efecto de desenfoque tipo "cristal esmerilado" */
+    -webkit-backdrop-filter: blur(8px); /* Compatibilidad con Safari */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Sombra inicial */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Estilos del Header cuando se hace scroll (se vuelve más opaco y con sombra más pronunciada) */
+header.header-scrolled {
+    background-color: var(--color-white-translucent); /* Blanco casi opaco al hacer scroll */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Estilos de los enlaces de navegación (Header) */
+header .nav-link, header .nav-link-mobile {
+    color: var(--color-white); /* Color del texto de los enlaces de navegación (blanco) */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4); /* Sombra de texto para mejor visibilidad */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    font-weight: 600; /* Un poco más de grosor para que resalten */
+}
+
+header .nav-link:hover, header .nav-link-mobile:hover {
+    color: var(--color-golden); /* Color dorado al pasar el ratón */
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6); /* Sombra más brillante al pasar el ratón */
+}
+
+/* Estilos para el texto del logo en el header */
+header .flex.items-center.space-x-2 a {
+    color: var(--color-white); /* Asegura que el logo tenga el texto blanco */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+header .flex.items-center.space-x-2 a:hover {
+    color: var(--color-golden); /* Dorado al hover del logo */
+}
+
+/* Utilitarios para sombras de texto */
+.text-shadow-sm {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-md {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.text-shadow-lg {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para la tarjeta flotante en el Hero (nueva clase) */
+.custom-hero-card-shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada para la tarjeta principal */
+    backdrop-filter: blur(10px); /* Desenfoque más fuerte para el hero card */
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil */
+}
+
+/* Estilos para secciones con sombra (efecto flotante) */
+.custom-section-shadow {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra suave y elevada para las secciones flotantes */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil para el efecto de flotación */
+    backdrop-filter: blur(6px); /* Agrega un desenfoque sutil a las secciones */
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Estilos para cards con sombra */
+.custom-card-shadow {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04); /* Sombra para las tarjetas de propuestas/eventos */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Estilos para imágenes con sombra */
+.custom-image-shadow {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para botones con sombra */
+.custom-button-shadow {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Carrusel de Logos */
+.carousel-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    white-space: nowrap;
+    animation: scrollLeft 30s linear infinite; /* Velocidad de la animación */
+    will-change: transform; /* Sugiere al navegador que optimice la animación */
+}
+
+@keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); } /* Mueve el 50% para el bucle infinito al duplicar elementos */
+}
+
+/* Pausar animación en hover para el carrusel */
+.carousel-container:hover .carousel-track {
+    animation-play-state: paused;
+}
+
+/* Barra flotante de Redes Sociales a la Izquierda */
+.left-social-float {
+    background-color: var(--color-purple-translucent-dark); /* Fondo morado oscuro transparente */
+    padding: 1rem 0.75rem;
+    border-radius: 0 0.75rem 0.75rem 0; /* Bordes redondeados solo a la derecha */
+    transition: transform 0.3s ease;
+}
+
+/* Estilo para los botones individuales dentro de la barra flotante */
+.left-social-float a {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Efecto hover: el botón individual se desplaza ligeramente a la derecha */
+.left-social-float a:hover {
+    transform: translateX(10px); /* Mueve el botón 10px a la derecha */
+    color: var(--color-golden); /* Cambia de color al dorado */
+}
+
+/* Estilos de scrollbar personalizados (solo para navegadores que los soporten) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Ancho del scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color del track */
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-purple-gradient-start); /* Color del "pulgar" del scrollbar */
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-purple-gradient-end); /* Color al pasar el ratón */
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    /* Ajustes específicos para la sección Hero en dispositivos móviles */
+    #hero {
+        height: 100vh;
+        background-size: cover;
+        background-position: center 70%;
+    }
+
+    #hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+    #hero p {
+        font-size: 1rem;
+    }
+    #hero img {
+        width: 100px; /* Un poco más pequeña la imagen en móviles */
+        height: 100px;
+    }
+
+    .carousel-item {
+        width: 50%; /* 2 logos por fila en móviles */
+    }
+
+    /* El botón flotante de WhatsApp ya está en bottom-4 right-4 */
+    /* El botón flotante del chatbot se reposiciona */
+    #chatbot-toggle-button {
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: 1.8rem;
+        right: calc(4rem + 16px); /* Ajusta la posición para no chocar con el botón de WhatsApp (4rem del WhatsApp + 16px de espacio) */
+    }
+
+    #chatbot-container {
+        width: calc(100% - 2rem); /* Ocupa casi todo el ancho */
+        left: 1rem;
+        right: 1rem;
+        bottom: 5rem; /* Ajuste para no chocar con el botón de toggle */
+    }
+
+    .nav-link-mobile {
+        font-size: 1.1rem;
+        padding: 0.75rem 1rem;
+    }
+
+    /* Ocultar la barra flotante izquierda en móviles */
+    .left-social-float {
+        display: none;
+    }
+}
+
+/* Ajustes para tabletas y tamaños intermedios (ej. md en Tailwind) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .carousel-item {
+        width: 33.333%; /* 3 logos por fila en tabletas */
+    }
+}
