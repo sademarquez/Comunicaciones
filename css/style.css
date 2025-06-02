@@ -1,252 +1,346 @@
-/* Estilos CSS personalizados para la Campaña de Ximena Lopez Yule */
+/* css/styles.css */
 
-/* Variables CSS para la paleta de colores */
+/* Variables CSS para colores y tipografías */
 :root {
-    --color-purple-dark: #4a148c; /* Morado muy oscuro (ej. para texto principal, footer) */
-    --color-purple-gradient-start: #6c2493; /* Morado base para gradiente y elementos interactivos */
-    --color-purple-gradient-end: #9747ff; /* Morado claro para gradiente, acentos y hover */
-    --color-purple-translucent-dark: rgba(74, 20, 140, 0.85); /* Fondo Header, Footer, Chatbot Header (85% opacidad) */
-    --color-purple-translucent-medium: rgba(108, 36, 147, 0.7); /* Background Hero Overlay (70% opacidad) */
-    --color-purple-translucent-light: rgba(171, 134, 255, 0.15); /* Secciones claras (15% opacidad) */
-    --color-golden: #facc15; /* Dorado suave (ej. para títulos y acentos) */
-    --color-golden-dark: #eab308; /* Dorado más intenso para hover */
-    --color-white-translucent: rgba(255, 255, 255, 0.9); /* Header Scrolled, Chatbot Container, Hero Card (90% opacidad) */
-    --color-white-translucent-medium: rgba(255, 255, 255, 0.7); /* Secciones About, Events, Contact (70% opacidad) */
-    --color-white: #ffffff; /* Blanco puro */
-    --color-gray-700: #4a5568; /* Gris oscuro para texto estándar (Tailwind default) - Asegura que este no sea muy claro */
-    --color-text-base: #333333; /* Color base para el texto del body si no se especifica otro */
+    /* Colores */
+    --primary-color: #007bff; /* Azul vibrante */
+    --secondary-color: #6c757d; /* Gris para elementos secundarios */
+    --accent-color: #28a745; /* Verde para ofertas/éxito */
+    --danger-color: #dc3545; /* Rojo para errores/eliminar */
+    --light-bg: #f8f9fa; /* Fondo claro */
+    --dark-bg: #343a40; /* Fondo oscuro (para footer, etc.) */
+    --text-color: #212529; /* Color de texto principal */
+    --text-light: #6c757d; /* Color de texto secundario */
+    --border-color: #dee2e6; /* Color para bordes */
+    --white: #ffffff;
+    --black: #000000;
+
+    /* Tipografías */
+    --font-primary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-heading: 'Roboto', sans-serif; /* Puedes importar Google Fonts */
+
+    /* Espaciado */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+
+    /* Transiciones */
+    --transition-speed: 0.3s;
 }
 
-/* Estilos Generales */
+/* Reset Básico */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: var(--font-primary);
     line-height: 1.6;
-    color: var(--color-text-base); /* Color de texto base APLICADO AQUÍ (gris oscuro) */
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden; /* Evita el scroll horizontal en caso de desbordamiento */
-    background-color: #f7f7f7; /* Un fondo ligeramente gris para el body general */
+    color: var(--text-color);
+    background-color: var(--light-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Aplicar la fuente Poppins a todos los títulos */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+a:hover {
+    color: darken(var(--primary-color), 10%); /* No es CSS nativo, usar RGBA o HSL */
+    /* Usar: color: #0056b3; o rgba(0, 123, 255, 0.8); */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+button, input[type="submit"] {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Clases utilitarias reutilizables */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Un tono más oscuro de primary-color */
+}
+
+.btn-secondary {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+/* Estilos de encabezados */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-heading);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-color);
 }
 
-/* Overlay de fondo con gradiente */
-.background-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Gradiente con los morados de la paleta */
-    background: linear-gradient(135deg, var(--color-purple-gradient-start) 0%, var(--color-purple-gradient-end) 100%);
-    opacity: 0.8;
-    z-index: -1;
-}
-
-/* Estilos del Header */
-header {
-    background-color: var(--color-purple-translucent-dark); /* Fondo morado oscuro transparente al inicio */
-    backdrop-filter: blur(8px); /* Efecto de desenfoque tipo "cristal esmerilado" */
-    -webkit-backdrop-filter: blur(8px); /* Compatibilidad con Safari */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Sombra inicial */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-/* Estilos del Header cuando se hace scroll (se vuelve más opaco y con sombra más pronunciada) */
-header.header-scrolled {
-    background-color: var(--color-white-translucent); /* Blanco casi opaco al hacer scroll */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
-
-/* Estilos de los enlaces de navegación (Header) */
-header .nav-link, header .nav-link-mobile {
-    color: var(--color-white); /* Color del texto de los enlaces de navegación (blanco) */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4); /* Sombra de texto para mejor visibilidad */
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-    font-weight: 600; /* Un poco más de grosor para que resalten */
-}
-
-header .nav-link:hover, header .nav-link-mobile:hover {
-    color: var(--color-golden); /* Color dorado al pasar el ratón */
-    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6); /* Sombra más brillante al pasar el ratón */
-}
-
-/* Estilos para el texto del logo en el header */
-header .flex.items-center.space-x-2 a {
-    color: var(--color-white); /* Asegura que el logo tenga el texto blanco */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-}
-header .flex.items-center.space-x-2 a:hover {
-    color: var(--color-golden); /* Dorado al hover del logo */
-}
-
-/* Utilitarios para sombras de texto */
-.text-shadow-sm {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.text-shadow-md {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-.text-shadow-lg {
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-}
-
-/* Estilos para la tarjeta flotante en el Hero (nueva clase) */
-.custom-hero-card-shadow {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada para la tarjeta principal */
-    backdrop-filter: blur(10px); /* Desenfoque más fuerte para el hero card */
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil */
-}
-
-/* Estilos para secciones con sombra (efecto flotante) */
-.custom-section-shadow {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra suave y elevada para las secciones flotantes */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil para el efecto de flotación */
-    backdrop-filter: blur(6px); /* Agrega un desenfoque sutil a las secciones */
-    -webkit-backdrop-filter: blur(6px);
-}
-
-/* Estilos para cards con sombra */
-.custom-card-shadow {
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04); /* Sombra para las tarjetas de propuestas/eventos */
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Estilos para imágenes con sombra */
-.custom-image-shadow {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), 0 3px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilos para botones con sombra */
-.custom-button-shadow {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-/* Carrusel de Logos */
-.carousel-container {
-    overflow: hidden;
+h2 {
+    font-size: 2em;
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
     position: relative;
+    padding-bottom: var(--spacing-sm);
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: var(--spacing-sm) auto 0;
+}
+
+/* Aquí irán los estilos para el header, footer y otras secciones principales */
+
+/* Header */
+.main-header {
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-md) 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.logo img {
+    height: 40px; /* Ajusta el tamaño del logo */
+    margin-right: var(--spacing-sm);
+}
+
+.main-nav .nav-list {
+    display: flex;
+    gap: var(--spacing-lg); /* Espacio entre los elementos de navegación */
+}
+
+.main-nav .nav-list a {
+    color: var(--text-color);
+    font-weight: 500;
+    padding: var(--spacing-sm) 0;
+    position: relative;
+}
+
+.main-nav .nav-list a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width var(--transition-speed) ease;
+}
+
+.main-nav .nav-list a:hover::after {
     width: 100%;
 }
 
-.carousel-track {
+.header-actions {
     display: flex;
-    white-space: nowrap;
-    animation: scrollLeft 30s linear infinite; /* Velocidad de la animación */
-    will-change: transform; /* Sugiere al navegador que optimice la animación */
+    align-items: center;
+    gap: var(--spacing-md);
 }
 
-@keyframes scrollLeft {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); } /* Mueve el 50% para el bucle infinito al duplicar elementos */
+.search-bar {
+    display: flex;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: var(--light-bg);
 }
 
-/* Pausar animación en hover para el carrusel */
-.carousel-container:hover .carousel-track {
-    animation-play-state: paused;
+.search-bar input {
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    outline: none;
+    flex-grow: 1;
+    background-color: transparent;
 }
 
-/* Barra flotante de Redes Sociales a la Izquierda */
-.left-social-float {
-    background-color: var(--color-purple-translucent-dark); /* Fondo morado oscuro transparente */
-    padding: 1rem 0.75rem;
-    border-radius: 0 0.75rem 0.75rem 0; /* Bordes redondeados solo a la derecha */
-    transition: transform 0.3s ease;
+.search-bar button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 0 20px 20px 0; /* Solo el lado derecho redondeado */
+    transition: background-color var(--transition-speed) ease;
 }
 
-/* Estilo para los botones individuales dentro de la barra flotante */
-.left-social-float a {
-    transition: transform 0.3s ease, color 0.3s ease;
+.search-bar button:hover {
+    background-color: #0056b3;
 }
 
-/* Efecto hover: el botón individual se desplaza ligeramente a la derecha */
-.left-social-float a:hover {
-    transform: translateX(10px); /* Mueve el botón 10px a la derecha */
-    color: var(--color-golden); /* Cambia de color al dorado */
+.cart-icon {
+    position: relative;
+    font-size: 1.5em;
+    color: var(--text-color);
 }
 
-/* Estilos de scrollbar personalizados (solo para navegadores que los soporten) */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 8px; /* Ancho del scrollbar */
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--danger-color);
+    color: var(--white);
+    font-size: 0.7em;
+    border-radius: 50%;
+    padding: 3px 6px;
+    min-width: 20px;
+    text-align: center;
+    line-height: 1;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Color del track */
-    border-radius: 10px;
+.menu-toggle {
+    display: none; /* Oculto por defecto, visible en móvil */
+    font-size: 1.8em;
+    color: var(--text-color);
+    background: none;
+    border: none;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--color-purple-gradient-start); /* Color del "pulgar" del scrollbar */
-    border-radius: 10px;
+
+/* Footer */
+.main-footer {
+    background-color: var(--dark-bg);
+    color: var(--white);
+    padding: var(--spacing-xl) 0 var(--spacing-md);
+    margin-top: var(--spacing-xl);
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--color-purple-gradient-end); /* Color al pasar el ratón */
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
 }
 
-/* Media Queries para responsividad */
-@media (max-width: 768px) {
-    /* Ajustes específicos para la sección Hero en dispositivos móviles */
-    #hero {
-        height: 100vh;
-        background-size: cover;
-        background-position: center 70%;
-    }
-
-    #hero h1 {
-        font-size: 2.5rem;
-        line-height: 1.2;
-    }
-    #hero p {
-        font-size: 1rem;
-    }
-    #hero img {
-        width: 100px; /* Un poco más pequeña la imagen en móviles */
-        height: 100px;
-    }
-
-    .carousel-item {
-        width: 50%; /* 2 logos por fila en móviles */
-    }
-
-    /* El botón flotante de WhatsApp ya está en bottom-4 right-4 */
-    /* El botón flotante del chatbot se reposiciona */
-    #chatbot-toggle-button {
-        width: 3.5rem;
-        height: 3.5rem;
-        font-size: 1.8rem;
-        right: calc(4rem + 16px); /* Ajusta la posición para no chocar con el botón de WhatsApp (4rem del WhatsApp + 16px de espacio) */
-    }
-
-    #chatbot-container {
-        width: calc(100% - 2rem); /* Ocupa casi todo el ancho */
-        left: 1rem;
-        right: 1rem;
-        bottom: 5rem; /* Ajuste para no chocar con el botón de toggle */
-    }
-
-    .nav-link-mobile {
-        font-size: 1.1rem;
-        padding: 0.75rem 1rem;
-    }
-
-    /* Ocultar la barra flotante izquierda en móviles */
-    .left-social-float {
-        display: none;
-    }
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: var(--spacing-md);
 }
 
-/* Ajustes para tabletas y tamaños intermedios (ej. md en Tailwind) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .carousel-item {
-        width: 33.333%; /* 3 logos por fila en tabletas */
-    }
+.footer-section h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.2em;
+}
+
+.footer-section p, .footer-section li {
+    font-size: 0.9em;
+    line-height: 1.8;
+    color: var(--text-light);
+}
+
+.footer-section a {
+    color: var(--text-light);
+}
+
+.footer-section a:hover {
+    color: var(--white);
+}
+
+.footer-section ul {
+    padding-left: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-section .social-media {
+    margin-top: var(--spacing-md);
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.footer-section .social-media a {
+    color: var(--white);
+    font-size: 1.5em;
+    transition: color var(--transition-speed) ease;
+}
+
+.footer-section .social-media a:hover {
+    color: var(--primary-color);
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.8em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--spacing-md);
+    color: var(--text-light);
 }
