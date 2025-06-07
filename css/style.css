@@ -1,69 +1,72 @@
-/* css/style.css */
+/* css/styles.css */
 
-/* Variables de Color (Paleta Oscura con Dorado) */
 :root {
-    --dark-bg: #1A1A1A; /* Fondo principal oscuro */
-    --darker-bg: #0F0F0F; /* Fondo para secciones alternas o footer */
-    --gold-primary: #FFD700; /* Dorado principal para texto y acentos */
-    --gold-light: #FFEA40; /* Dorado más claro para hover */
-    --text-light: #E0E0E0; /* Texto claro para contenido */
-    --text-muted: #A0A0A0; /* Texto más suave para descripciones */
-    --transparent-box: rgba(255, 255, 255, 0.08); /* Fondo transparente para elementos */
-    --transparent-box-hover: rgba(255, 215, 0, 0.15); /* Fondo transparente con ligero dorado en hover */
-    --border-gold-light: rgba(255, 215, 0, 0.3); /* Borde sutil dorado */
-    --shadow-dark: rgba(0, 0, 0, 0.6); /* Sombra oscura */
-    --shadow-gold: rgba(255, 215, 0, 0.2); /* Sombra dorada para elementos impactantes */
+    /* Colores */
+    --dark-bg: #1A1A1A; /* Fondo muy oscuro, casi negro */
+    --darker-bg: #121212; /* Aún más oscuro para elementos clave */
+    --gold-primary: #FFD700; /* Dorado principal */
+    --gold-light: #FFEA8D; /* Dorado más claro para hover/énfasis */
+    --text-light: #E0E0E0; /* Texto claro general */
+    --text-muted: #A0A0A0; /* Texto secundario/desactivado */
+    --white: #FFFFFF;
+    --red-danger: #E74C3C; /* Para errores o eliminar */
+
+    /* Transparencia para los recuadros */
+    --transparent-box: rgba(0, 0, 0, 0.6); /* Fondo oscuro con transparencia para las tarjetas */
+    --transparent-box-hover: rgba(255, 215, 0, 0.1); /* Toque dorado en hover */
+    --transparent-overlay: rgba(0, 0, 0, 0.85); /* Para modales/sidebars */
+
+
+    /* Sombras y bordes */
+    --shadow-dark: rgba(0, 0, 0, 0.6); /* Sombra oscura para profundidad */
+    --shadow-gold: rgba(255, 215, 0, 0.3); /* Sombra con brillo dorado */
+    --border-gold-light: rgba(255, 215, 0, 0.2); /* Borde dorado sutil */
+    --border-gold-strong: rgba(255, 215, 0, 0.4); /* Borde dorado más fuerte en hover */
+
 
     /* Espaciado */
     --spacing-xs: 5px;
     --spacing-sm: 10px;
     --spacing-md: 20px;
-    --spacing-lg: 40px;
-    --spacing-xl: 60px;
+    --spacing-lg: 30px;
+    --spacing-xl: 50px;
+    --spacing-xxl: 80px;
+
+    /* Tipografía */
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Open Sans', sans-serif;
 
     /* Transiciones */
     --transition-speed: 0.3s;
     --transition-ease: ease-in-out;
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Para efectos más dinámicos */
 }
 
-/* Reset Básico */
-* {
+/* Base styles */
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-/* Base Body Styles */
+html {
+    scroll-behavior: smooth; /* Desplazamiento suave para anclas */
+}
+
 body {
-    font-family: 'Open Sans', sans-serif; /* Usaremos una fuente más legible y moderna */
-    background-color: var(--dark-bg);
-    color: var(--text-light);
+    font-family: var(--font-secondary);
     line-height: 1.6;
-    scroll-behavior: smooth;
-    overflow-x: hidden; /* Evita scroll horizontal no deseado */
+    color: var(--text-light);
+    background-color: var(--dark-bg);
+    overflow-x: hidden; /* Evita scroll horizontal */
 }
 
-/* Contenedor General */
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md); /* Padding en los laterales */
+    padding: 0 var(--spacing-md); /* Espaciado lateral por defecto */
 }
 
-/* Títulos y Encabezados */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif; /* Fuente más bold y moderna para títulos */
-    color: var(--gold-primary);
-    margin-bottom: var(--spacing-md);
-    text-align: center;
-}
-
-h1 { font-size: 2.8rem; }
-h2 { font-size: 2.2rem; }
-h3 { font-size: 1.8rem; }
-h4 { font-size: 1.4rem; }
-
-/* Enlaces */
 a {
     color: var(--gold-primary);
     text-decoration: none;
@@ -72,141 +75,175 @@ a {
 
 a:hover {
     color: var(--gold-light);
-    text-decoration: underline;
 }
 
-/* Botones Generales */
-.btn {
-    display: inline-flex; /* Permite alinear icono y texto */
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: none;
-    transition: background-color var(--transition-speed) var(--transition-ease),
-                color var(--transition-speed) var(--transition-ease),
-                transform var(--transition-speed) var(--transition-ease),
-                box-shadow var(--transition-speed) var(--transition-ease);
-}
-
-.btn i {
-    margin-right: var(--spacing-xs);
-}
-
-.btn-primary {
-    background-color: var(--gold-primary);
-    color: var(--dark-bg);
-    box-shadow: 0 4px 8px var(--shadow-gold);
-}
-
-.btn-primary:hover {
-    background-color: var(--gold-light);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px var(--shadow-gold);
-}
-
-.btn-secondary {
-    background-color: var(--transparent-box);
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
     color: var(--gold-primary);
-    border: 1px solid var(--border-gold-light);
-}
-
-.btn-secondary:hover {
-    background-color: var(--transparent-box-hover);
-    color: var(--gold-light);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px var(--shadow-gold);
-}
-
-.btn-whatsapp {
-    background-color: #25D366; /* Verde WhatsApp */
-    color: #FFFFFF;
-    border: none;
-}
-
-.btn-whatsapp:hover {
-    background-color: #1DA851;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(37, 211, 102, 0.4);
-}
-
-.btn-small {
-    padding: 8px 15px;
-    font-size: 0.85em;
-}
-
-/* Secciones Generales */
-section {
-    padding: var(--spacing-xl) 0; /* Mayor padding vertical */
-    background-color: var(--dark-bg); /* Por defecto */
-}
-
-/* Alternar color de fondo para secciones */
-section:nth-of-type(even) {
-    background-color: var(--darker-bg);
-}
-
-.section-description {
-    text-align: center;
-    margin-bottom: var(--spacing-lg);
-    font-size: 1.1em;
-    color: var(--text-muted);
-}
-
-/* Formulario */
-.form-group {
     margin-bottom: var(--spacing-md);
+    text-align: center;
 }
 
-.form-group label {
-    display: block;
+h1 { font-size: 3em; }
+h2 { font-size: 2.5em; }
+h3 { font-size: 2em; }
+h4 { font-size: 1.5em; }
+
+p {
     margin-bottom: var(--spacing-sm);
-    color: var(--gold-primary);
-    font-weight: bold;
 }
 
-.form-group input[type="text"],
-.form-group input[type="tel"],
-.form-group input[type="email"],
-.form-group textarea,
-.form-group select {
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
     width: 100%;
     padding: var(--spacing-sm);
-    background-color: rgba(0, 0, 0, 0.3); /* Fondo de input más oscuro */
+    margin-bottom: var(--spacing-md);
     border: 1px solid var(--border-gold-light);
     border-radius: 5px;
+    background-color: var(--transparent-box);
     color: var(--text-light);
+    font-family: var(--font-secondary);
     font-size: 1em;
     transition: border-color var(--transition-speed) var(--transition-ease),
                 box-shadow var(--transition-speed) var(--transition-ease);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="tel"]::placeholder,
+input[type="number"]::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
     outline: none;
     border-color: var(--gold-primary);
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2); /* Sombra de foco dorada */
+    box-shadow: 0 0 8px var(--shadow-gold); /* Brillo dorado al enfocar */
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-/* Mensajes de No Resultados */
-.no-results {
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 5px;
     text-align: center;
-    color: var(--text-muted);
-    padding: var(--spacing-lg);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition-speed) var(--transition-ease);
+    border: none; /* Por defecto sin borde */
+    font-family: var(--font-primary);
+    font-size: 1em;
+}
+
+.btn-primary {
+    background-color: var(--gold-primary);
+    color: var(--darker-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:hover {
+    background-color: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--shadow-gold);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--gold-primary);
+    border: 1px solid var(--gold-primary);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary:hover {
+    background-color: var(--gold-primary);
+    color: var(--darker-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--shadow-gold);
+}
+
+/* Utlidades */
+.text-center {
+    text-align: center;
+}
+
+.section-title {
+    margin-bottom: var(--spacing-xl);
+    color: var(--gold-light);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* Scrollbar personalizado (Webkit) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--darker-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 215, 0, 0.3); /* Dorado transparente */
+    border-radius: 10px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--gold-primary);
+}
+
+/* Toast Notifications */
+#toast-container {
+    position: fixed;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 2000; /* Asegura que esté encima de todo */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.toast {
+    background-color: var(--transparent-box); /* Fondo del toast */
+    color: var(--text-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 5px;
+    box-shadow: 0 5px 15px var(--shadow-dark);
+    border: 1px solid var(--border-gold-strong); /* Borde más fuerte */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    min-width: 250px;
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.hide {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.toast i {
+    color: var(--gold-primary);
     font-size: 1.2em;
 }
 
-/* Rating Stars (Si se implementa) */
-.product-rating .fa-star {
-    color: var(--gold-primary);
-    margin-right: 2px;
+.toast.error i {
+    color: var(--red-danger);
 }
