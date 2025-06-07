@@ -1,127 +1,160 @@
 // js/products.js
 
-import { appState } from './main.js'; // Importar el estado global
+import { appState } from './main.js';
+import { addToCart } from './cart.js'; // Importar addToCart
 
 /**
- * Carga los productos y banners. En este punto, ya se están cargando en main.js
- * pero esta función se mantiene para claridad si se quisiera cargar solo productos aquí.
- * @returns {Promise<void>}
+ * Formatea un número como moneda colombiana.
+ * @param {number} value
+ * @returns {string}
  */
-export async function loadProducts() {
-    // Los productos ya se cargan en main.js en appState.products
-    // Si fuera necesario, se podrían cargar aquí también.
+function formatCurrency(value) {
+    if (typeof value !== 'number') return value; // Si ya es un string (e.g., "Desde X"), devolverlo tal cual
+    return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0 // Sin decimales para pesos colombianos
+    }).format(value);
 }
+
+/**
+ * Crea una tarjeta de producto para celulares y accesorios.
+ * @param {object} product - Objeto del producto.
+ * @returns {HTMLElement} - Elemento de tarjeta de producto.
+ */
+function createProductCard(product) {
+    const card = document.createElement('div');
+    card.classList.add('product-card');
+
+    const priceHtml = product.isOnOffer && product.offerPrice
+        ? `<span class="old-price">${formatCurrency(product.price)}</span> <span class="current-price">${formatCurrency(product.offerPrice)}</span>`
+        : `<span class="current-price">${formatCurrency(product.price)}</span>`;
+
+    card.innerHTML = `
+        <img src="${product.imageUrl}" alt="${product.name}" loading="lazy" class="product-image">
+        <h4 class="product-name">${product.name}</h4>
+        <p class="product-description">${product.description}</p>
+        <div class="product-price">${priceHtml}</div>
+        <div class="product-actions">
+            <button class="btn btn-secondary add-to-cart-btn" data-id="${product.id}">
+                <i class="fas fa-cart-plus"></i> Agregar al Carrito
+            </button>
+            <a href="${product.whatsapp_link}" target="_blank" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Preguntar
+            </a>
+        </div>
+    `;
+
+    // Añadir evento al botón "Agregar al Carrito"
+    const addToCartBtn = card.querySelector('.add-to-cart-btn');
+    addToCartBtn.addEventListener('click', () => addToCart(product.id));
+
+    return card;
+}
+
+/**
+ * Crea una tarjeta de información para servicios técnicos o créditos.
+ * @param {object} item - Objeto del servicio o crédito.
+ * @returns {HTMLElement} - Elemento de tarjeta de información.
+ */
+function createInfoCard(item) {
+    const card = document.createElement('div');
+    card.classList.add('info-card'); // Nueva clase para estos tipos de tarjeta
+
+    let whatsappButton = '';
+    if (item.whatsapp_link) {
+        whatsappButton = `<a href="${item.whatsapp_link}" target="_blank" class="btn btn-whatsapp btn-small">
+            <i class="fab fa-whatsapp"></i> Consultar
+        </a>`;
+    } else if (item.isBookable) {
+        // Si es un servicio técnico y se puede agendar, no necesita botón de WhatsApp aquí
+        // La cita se gestiona con el formulario de la sección.
+        // Podríamos poner un enlace a la sección de cita.
+        whatsappButton = `<a href="#service-tech-section" class="btn btn-primary btn-small">
+            <i class="fas fa-calendar-alt"></i> Agendar Cita
+        </a>`;
+    }
+
+    card.innerHTML = `
+        <img src="${item.imageUrl}" alt="${item.name}" loading="lazy" class="info-image">
+        <h4 class="info-name">${item.name}</h4>
+        <p class="info-description">${item.description}</p>
+        <div class="info-price">${item.price}</div>
+        <div class="info-actions">
+            ${whatsappButton}
+        </div>
+    `;
+    return card;
+}
+
 
 /**
  * Renderiza los productos en un contenedor HTML.
  * @param {Array} productsToRender - La lista de productos a mostrar.
  * @param {string} containerSelector - Selector CSS del contenedor donde se renderizarán.
- * @param {object} options - Opciones adicionales (ej. { limit: 8, isNew: true })
  */
-export function renderProducts(productsToRender, containerSelector, options = {}) {
+export function renderProducts(productsToRender, containerSelector) {
     const container = document.querySelector(containerSelector);
     if (!container) {
         console.error(`Contenedor no encontrado para renderizar productos: ${containerSelector}`);
         return;
     }
 
-    // Filtrar si hay opciones
-    let filteredProducts = [...productsToRender]; // Copia para no modificar el original
-
-    if (options.isNew) {
-        filteredProducts = filteredProducts.filter(p => p.isNew);
-    }
-    if (options.limit) {
-        filteredProducts = filteredProducts.slice(0, options.limit);
-    }
-
     container.innerHTML = ''; // Limpiar el contenedor antes de renderizar
 
-    if (filteredProducts.length === 0) {
-        container.innerHTML = '<p>No hay productos disponibles en esta categoría.</p>';
+    if (productsToRender.length === 0) {
+        container.innerHTML = '<p class="no-results">No hay productos disponibles en esta categoría.</p>';
         return;
     }
 
-    filteredProducts.forEach(product => {
-        const productCard = createProductCard(product);
-        container.appendChild(productCard);
+    productsToRender.forEach(product => {
+        container.appendChild(createProductCard(product));
     });
-
-    console.log(`Productos renderizados en ${containerSelector}:`, filteredProducts.length);
 }
 
 /**
- * Crea la tarjeta HTML de un solo producto.
- * @param {object} product - Objeto de producto.
- * @returns {HTMLElement} El elemento HTML de la tarjeta del producto.
+ * Renderiza los servicios técnicos y opciones de crédito.
+ * @param {Array} itemsToRender - La lista de servicios o créditos a mostrar.
+ * @param {string} containerSelector - Selector CSS del contenedor.
  */
-function createProductCard(product) {
-    const card = document.createElement('div');
-    card.classList.add('product-card');
-    card.dataset.id = product.id; // Para identificar el producto al agregar al carrito
-
-    let priceHtml = `<span class="price">$${product.price.toLocaleString('es-CO')}</span>`;
-    let badgeHtml = '';
-
-    if (product.isOnOffer && product.offerPrice) {
-        priceHtml = `
-            <span class="old-price">$${product.price.toLocaleString('es-CO')}</span>
-            <span class="price">$${product.offerPrice.toLocaleString('es-CO')}</span>
-        `;
-        badgeHtml = `<span class="product-badge offer">Oferta</span>`;
-    } else if (product.isNew) {
-        badgeHtml = `<span class="product-badge new">Nuevo</span>`;
+export function renderServicesAndCredits(itemsToRender, containerSelector) {
+    const container = document.querySelector(containerSelector);
+    if (!container) {
+        console.error(`Contenedor no encontrado para renderizar servicios/créditos: ${containerSelector}`);
+        return;
     }
 
-    card.innerHTML = `
-        <div class="product-card-image">
-            <img src="${product.imageUrl}" alt="${product.name}" loading="lazy">
-            ${badgeHtml}
-        </div>
-        <div class="product-card-info">
-            <h3>${product.name}</h3>
-            <p class="brand">${product.brand}</p>
-            <div class="price-container">
-                ${priceHtml}
-            </div>
-            <div class="product-card-actions">
-                <button class="add-to-cart-btn" data-product-id="${product.id}">Agregar al Carrito</button>
-            </div>
-        </div>
-    `;
+    container.innerHTML = ''; // Limpiar el contenedor
 
-    // Añadir event listener al botón de "Agregar al Carrito"
-    const addToCartBtn = card.querySelector('.add-to-cart-btn');
-    if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que se dispare el evento del click en la tarjeta si hubiera
-            const productId = e.target.dataset.productId;
-            // Aquí se llamaría a la función de agregar al carrito desde el módulo cart.js
-            import('./cart.js').then(module => module.addToCart(productId));
-        });
+    if (itemsToRender.length === 0) {
+        container.innerHTML = '<p class="no-results">No hay opciones disponibles en esta sección.</p>';
+        return;
     }
 
-    return card;
+    itemsToRender.forEach(item => {
+        container.appendChild(createInfoCard(item));
+    });
 }
 
+
 /**
- * Configura los filtros de productos y actualiza la vista.
- * @param {Array} products - Lista de todos los productos disponibles.
+ * Configura los filtros de productos (marca y precio) y la búsqueda.
+ * @param {Array} allProducts - Todos los productos cargados inicialmente.
  */
-export function setupProductFilters(products) {
+export function setupProductFilters(allProducts) {
     const brandFilter = document.getElementById('brandFilter');
     const priceFilter = document.getElementById('priceFilter');
-    const productSearchInput = document.getElementById('productSearch');
-    const allProductsGrid = document.getElementById('allProductsGrid');
+    const searchInput = document.getElementById('searchInput'); // Asumiendo que searchInput está en main.js
 
-    if (!brandFilter || !priceFilter || !productSearchInput || !allProductsGrid) {
-        console.warn('Uno o más elementos de filtro de productos no encontrados.');
+    if (!brandFilter || !priceFilter) {
+        console.warn('Elementos de filtro no encontrados. Los filtros de producto no funcionarán.');
         return;
     }
 
-    // Llenar el filtro de marcas dinámicamente
-    const brands = [...new Set(products.map(p => p.brand))].sort();
-    brands.forEach(brand => {
+    // Llenar filtro de marcas dinámicamente
+    const uniqueBrands = [...new Set(allProducts.filter(p => p.category === 'Celular' || p.category === 'Accesorio').map(p => p.brand))];
+    brandFilter.innerHTML = '<option value="">Todas las Marcas</option>';
+    uniqueBrands.sort().forEach(brand => {
         const option = document.createElement('option');
         option.value = brand;
         option.textContent = brand;
@@ -129,63 +162,94 @@ export function setupProductFilters(products) {
     });
 
     const applyFilters = () => {
-        let filtered = [...products];
+        let filtered = allProducts.filter(p => p.category === 'Celular' || p.category === 'Accesorio'); // Solo celulares y accesorios para estos filtros
 
         // Filtrar por marca
         const selectedBrand = brandFilter.value;
         if (selectedBrand) {
-            filtered = filtered.filter(p => p.brand === selectedBrand);
-        }
-
-        // Filtrar por texto de búsqueda (se manejará más a fondo en search.js)
-        const searchTerm = productSearchInput.value.toLowerCase();
-        if (searchTerm) {
-            filtered = filtered.filter(p =>
-                p.name.toLowerCase().includes(searchTerm) ||
-                p.description.toLowerCase().includes(searchTerm) ||
-                p.brand.toLowerCase().includes(searchTerm)
-            );
+            filtered = filtered.filter(product => product.brand === selectedBrand);
         }
 
         // Ordenar por precio
-        const sortOrder = priceFilter.value;
-        if (sortOrder === 'asc') {
+        const priceOrder = priceFilter.value;
+        if (priceOrder === 'asc') {
             filtered.sort((a, b) => (a.offerPrice || a.price) - (b.offerPrice || b.price));
-        } else if (sortOrder === 'desc') {
+        } else if (priceOrder === 'desc') {
             filtered.sort((a, b) => (b.offerPrice || b.price) - (a.offerPrice || a.price));
         }
 
-        renderProducts(filtered, '#allProductsGrid');
+        // Renderizar solo los productos de la categoría de celulares si es el filtro principal
+        renderProducts(filtered.filter(p => p.category === 'Celular'), '#celularesGrid');
+        renderProducts(filtered.filter(p => p.category === 'Accesorio'), '#accesoriosGrid');
     };
 
     brandFilter.addEventListener('change', applyFilters);
     priceFilter.addEventListener('change', applyFilters);
-    productSearchInput.addEventListener('input', applyFilters); // Para búsqueda en tiempo real
+    // Nota: La lógica de búsqueda en tiempo real o por botón está en search.js
+    // Si la búsqueda debe interactuar con estos filtros, se haría aquí.
+
+    // Inicializar filtros al cargar la página si hay parámetros en la URL o un estado guardado
+    // applyFilters(); // Se llamará cuando se carguen los productos inicialmente en main.js
 }
 
-// Función para cargar las marcas dinámicamente en la sección "Explora por Marca"
+
+/**
+ * Carga y renderiza las marcas dinámicamente en la sección "Explora por Marca".
+ * @param {Array} products - Todos los productos cargados.
+ */
 export function renderBrands(products) {
     const brandsListContainer = document.getElementById('brandsList');
-    if (!brandsListContainer) return;
+    if (!brandsListContainer) {
+        console.warn('Contenedor de marcas no encontrado.');
+        return;
+    }
 
-    brandsListContainer.innerHTML = ''; // Limpiar las marcas estáticas
+    brandsListContainer.innerHTML = ''; // Limpiar marcas estáticas
 
-    const uniqueBrands = new Map(); // Usar un Map para mantener el orden y evitar duplicados
+    // Usar las marcas definidas en config.json (appState.brands)
+    if (appState.brands && appState.brands.length > 0) {
+        appState.brands.forEach(brand => {
+            const brandItem = document.createElement('a');
+            brandItem.href = `#celulares-section?brand=${encodeURIComponent(brand.name)}`;
+            brandItem.classList.add('brand-item');
+            brandItem.innerHTML = `
+                <img src="${brand.logoUrl}" alt="Logo ${brand.name}" loading="lazy">
+                <span>${brand.name}</span>
+            `;
+            // Opcional: añadir un evento para filtrar al hacer clic en la marca
+            brandItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('brandFilter').value = brand.name;
+                document.getElementById('brandFilter').dispatchEvent(new Event('change'));
+                document.getElementById('celulares-section').scrollIntoView({ behavior: 'smooth' });
+            });
+            brandsListContainer.appendChild(brandItem);
+        });
+    } else {
+        // Fallback si no hay marcas en config, se pueden extraer de productos
+        const uniqueBrandsFromProducts = new Map();
+        products.filter(p => p.category === 'Celular' || p.category === 'Accesorio').forEach(product => {
+            if (!uniqueBrandsFromProducts.has(product.brand)) {
+                // Asumiendo un patrón de logo para marcas no definidas en config
+                uniqueBrandsFromProducts.set(product.brand, `images/icons/${product.brand.toLowerCase().replace(/\s/g, '-')}-logo.svg`);
+            }
+        });
 
-    products.forEach(product => {
-        if (!uniqueBrands.has(product.brand)) {
-            uniqueBrands.set(product.brand, product.brandLogoUrl || `images/icons/${product.brand.toLowerCase()}-logo.svg`);
-        }
-    });
-
-    uniqueBrands.forEach((logoUrl, brandName) => {
-        const brandItem = document.createElement('a');
-        brandItem.href = `#celulares?brand=${encodeURIComponent(brandName)}`; // Enlace a la sección de celulares filtrados
-        brandItem.classList.add('brand-item');
-        brandItem.innerHTML = `
-            <img src="${logoUrl}" alt="Logo ${brandName}">
-            <span>${brandName}</span>
-        `;
-        brandsListContainer.appendChild(brandItem);
-    });
+        uniqueBrandsFromProducts.forEach((logoUrl, brandName) => {
+            const brandItem = document.createElement('a');
+            brandItem.href = `#celulares-section?brand=${encodeURIComponent(brandName)}`;
+            brandItem.classList.add('brand-item');
+            brandItem.innerHTML = `
+                <img src="${logoUrl}" alt="Logo ${brandName}" loading="lazy">
+                <span>${brandName}</span>
+            `;
+            brandItem.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('brandFilter').value = brandName;
+                document.getElementById('brandFilter').dispatchEvent(new Event('change'));
+                document.getElementById('celulares-section').scrollIntoView({ behavior: 'smooth' });
+            });
+            brandsListContainer.appendChild(brandItem);
+        });
+    }
 }
