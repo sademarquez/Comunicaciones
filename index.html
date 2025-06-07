@@ -3,46 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMUNICACIONES LUNA - Tu Tienda de Celulares y Accesorios</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Comunicaciones Luna - Tu Tienda de Celulares y Accesorios</title>
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="main-header">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
-                    <img src="images/icons/logo-luna.svg" alt="Logo de Comunicaciones Luna">
-                    <span>COMUNICACIONES LUNA</span>
+                    <img src="images/icons/logo.svg" alt="Logo de Comunicaciones Luna">
+                    <span>Comunicaciones Luna</span>
                 </a>
                 <nav class="main-nav">
                     <ul class="nav-list">
-                        <li><a href="#hero">Inicio</a></li>
-                        <li><a href="#celulares-section">Celulares</a></li>
-                        <li><a href="#accesorios-section">Accesorios</a></li>
-                        <li><a href="#creditos-section">Créditos</a></li>
-                        <li><a href="#service-tech-section">Servicio Técnico</a></li>
+                        <li><a href="#novedades">Novedades</a></li>
+                        <li><a href="#celulares">Celulares</a></li>
+                        <li><a href="#accesorios">Accesorios</a></li>
                         <li><a href="#marcas">Marcas</a></li>
-                        <li><a href="#contact">Contacto</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
                     </ul>
                 </nav>
                 <div class="header-actions">
                     <div class="search-bar">
-                        <input type="text" id="searchInput" placeholder="Buscar productos...">
+                        <input type="text" id="searchInput" placeholder="Buscar celulares...">
                         <button type="button" id="searchButton" aria-label="Buscar"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="cart-icon-container">
-                        <a href="#" id="cartIcon" aria-label="Ver Carrito">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-count" id="cartCount">0</span>
-                        </a>
+                        <a href="#" id="cartIcon" aria-label="Ver carrito de compras"><i class="fas fa-shopping-cart"></i></a>
+                        <span class="cart-count" id="cartCount">0</span>
                     </div>
-                    <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menú">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -51,152 +47,255 @@
     </header>
 
     <main>
-        <section id="hero" class="hero-section">
+        <section class="hero-section" id="home">
             <div class="carousel-container">
                 <div class="carousel-track" id="carouselTrack">
                     </div>
-                <button class="carousel-nav prev" id="carouselPrev" aria-label="Anterior">&#10094;</button>
-                <button class="carousel-nav next" id="carouselNext" aria-label="Siguiente">&#10095;</button>
-                <div class="carousel-dots" id="carouselDots">
-                    </div>
             </div>
-            <div class="welcome-message-overlay">
-                <h2>¡Bienvenido a COMUNICACIONES LUNA!</h2>
-                <p>Tu universo de tecnología móvil y accesorios. <br>Actualmente tienes <span id="welcomeCartItemCount">0</span> productos en tu carrito.</p>
+            <button class="carousel-nav prev" id="carouselPrev" aria-label="Anterior slide">&#10094;</button>
+            <button class="carousel-nav next" id="carouselNext" aria-label="Siguiente slide">&#10095;</button>
+            <div class="carousel-dots" id="carouselDots">
+                </div>
+            <div class="welcome-message-overlay" id="welcomeMessageOverlay">
+                <h2>¡Bienvenido a Comunicaciones Luna!</h2>
+                <p>Explora nuestras últimas ofertas y productos. Tienes <span id="welcomeCartItemCount">0</span> artículos en tu carrito.</p>
+                <button class="btn btn-primary" id="welcomeOverlayShopNow">Comprar Ahora</button>
             </div>
         </section>
 
-        <section id="categories" class="category-quick-access">
+        <section class="category-quick-access" id="categorias">
             <div class="container">
-                <h3>Explora Nuestras Categorías</h3>
+                <h2 class="section-title">Explora por Categoría</h2>
                 <div class="category-grid">
-                    <a href="#celulares-section" class="category-card" data-category-id="celulares">
+                    <a href="#celulares" class="category-card">
                         <i class="fas fa-mobile-alt"></i>
                         <span>Celulares</span>
                     </a>
-                    <a href="#accesorios-section" class="category-card" data-category-id="accesorios">
+                    <a href="#accesorios" class="category-card">
                         <i class="fas fa-headphones-alt"></i>
                         <span>Accesorios</span>
                     </a>
-                    <a href="#creditos-section" class="category-card" data-category-id="creditos">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Créditos</span>
-                    </a>
-                    <a href="#service-tech-section" class="category-card" data-category-id="serviciotecnico">
+                    <a href="#servicio-tecnico" class="category-card">
                         <i class="fas fa-tools"></i>
                         <span>Servicio Técnico</span>
                     </a>
+                    <a href="#marcas" class="category-card">
+                        <i class="fas fa-tags"></i>
+                        <span>Marcas Destacadas</span>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="celulares-section" class="product-listing-section">
+        <section class="product-listing-section" id="novedades">
             <div class="container">
-                <h3>Lo Último en Celulares</h3>
+                <h2 class="section-title">Novedades</h2>
+                <div class="product-grid" id="newProductsGrid">
+                    </div>
+            </div>
+        </section>
+
+        <section class="product-listing-section" id="celulares">
+            <div class="container">
+                <h2 class="section-title">Todos Nuestros Celulares</h2>
                 <div class="filters">
-                    <select id="brandFilter">
-                        <option value="">Todas las Marcas</option>
+                    <select id="brandFilter" aria-label="Filtrar por marca">
+                        <option value="">Todas las marcas</option>
                         </select>
-                    <select id="priceFilter">
-                        <option value="">Ordenar por Precio</option>
+                    <select id="priceFilter" aria-label="Ordenar por precio">
+                        <option value="">Ordenar por precio</option>
                         <option value="asc">Menor a Mayor</option>
                         <option value="desc">Mayor a Menor</option>
                     </select>
+                    <input type="text" id="productSearchInput" placeholder="Buscar celular específico..." aria-label="Buscar celular por nombre o descripción">
                 </div>
-                <div class="product-grid" id="celularesGrid">
+                <div class="product-grid" id="allProductsGrid">
                     </div>
             </div>
         </section>
 
-        <section id="accesorios-section" class="product-listing-section">
+        <section class="product-listing-section" id="accesorios">
             <div class="container">
-                <h3>Accesorios Indispensables</h3>
-                <div class="product-grid" id="accesoriosGrid">
+                <h2 class="section-title">Accesorios Imperdibles</h2>
+                <div class="product-grid" id="accessoriesGrid">
                     </div>
             </div>
         </section>
 
-        <section id="creditos-section" class="info-section">
+        <section class="brands-section" id="marcas">
             <div class="container">
-                <h3>Financiación y Créditos</h3>
-                <p class="section-description">Facilitamos la adquisición de tu próximo dispositivo. ¡Conoce nuestras opciones de crédito flexibles!</p>
-                <div class="service-info-grid" id="creditosGrid">
-                    </div>
-            </div>
-        </section>
-
-        <section id="service-tech-section" class="info-section">
-            <div class="container">
-                <h3>Servicio Técnico Especializado</h3>
-                <p class="section-description">Confía tus dispositivos a nuestros expertos. Reparaciones rápidas y garantizadas.</p>
-                <div class="service-info-grid" id="serviceTechGrid">
-                    </div>
-
-                <div class="appointment-card">
-                    <h4>Solicita tu Cita de Servicio Técnico</h4>
-                    <form id="appointmentForm" class="appointment-form">
-                        <div class="form-group">
-                            <label for="appName">Nombre Completo:</label>
-                            <input type="text" id="appName" name="appName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="appPhone">Teléfono de Contacto:</label>
-                            <input type="tel" id="appPhone" name="appPhone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="appServiceType">Tipo de Servicio:</label>
-                            <select id="appServiceType" name="appServiceType" required>
-                                <option value="">Selecciona un servicio</option>
-                                </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="appDescription">Describe brevemente el problema:</label>
-                            <textarea id="appDescription" name="appDescription" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Agendar Cita por WhatsApp</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <section id="marcas" class="brands-section">
-            <div class="container">
-                <h3>Explora por Marca</h3>
+                <h2 class="section-title">Explora por Marca</h2>
                 <div class="brands-list" id="brandsList">
                     </div>
             </div>
         </section>
 
-        <section id="contact" class="contact-section">
+        <section class="info-section" id="creditos">
             <div class="container">
-                <h3>Contáctanos</h3>
-                <p>¿Tienes preguntas? ¡Estamos aquí para ayudarte!</p>
-                <p><i class="fas fa-map-marker-alt"></i> Popayán, Cauca, Colombia</p>
-                <p><i class="fas fa-phone"></i> <a href="tel:+573201234567">+57 320 123 4567</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@comunicacionesluna.com">info@comunicacionesluna.com</a></p>
-                <div class="social-media">
-                    <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank" aria-label="Whatsapp"><i class="fab fa-whatsapp"></i></a>
+                <h2 class="section-title">Compra a Crédito con Nosotros</h2>
+                <div class="service-info-grid">
+                    <div class="info-card">
+                        <img src="images/services/credit-application.jpg" alt="Solicitud de crédito" class="info-image">
+                        <h3 class="info-name">Proceso Sencillo</h3>
+                        <p class="info-description">Aplica en línea en pocos minutos. Documentación mínima y respuesta rápida.</p>
+                        <div class="info-actions">
+                            <button class="btn btn-primary">Más Información</button>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <img src="images/services/flexible-payments.jpg" alt="Pagos flexibles" class="info-image">
+                        <h3 class="info-name">Cuotas Flexibles</h3>
+                        <p class="info-description">Elige el plan de pagos que mejor se adapte a tu bolsillo. Sin costos ocultos.</p>
+                        <div class="info-actions">
+                            <button class="btn btn-primary">Simula tu Crédito</button>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <img src="images/services/instant-approval.jpg" alt="Aprobación instantánea" class="info-image">
+                        <h3 class="info-name">Aprobación Rápida</h3>
+                        <p class="info-description">Recibe la aprobación de tu crédito casi de inmediato y estrena tu celular.</p>
+                        <div class="info-actions">
+                            <button class="btn btn-primary">Beneficios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section" id="servicio-tecnico">
+            <div class="container">
+                <h2 class="section-title">Servicio Técnico Especializado</h2>
+                <div class="service-info-grid">
+                    <div class="info-card">
+                        <img src="images/services/diagnostic.jpg" alt="Diagnóstico preciso" class="info-image">
+                        <h3 class="info-name">Diagnóstico Preciso</h3>
+                        <p class="info-description">Técnicos certificados para identificar el problema de tu dispositivo con exactitud.</p>
+                        <div class="info-actions">
+                            <button class="btn btn-secondary">Agenda Diagnóstico</button>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <img src="images/services/repair.jpg" alt="Reparación garantizada" class="info-image">
+                        <h3 class="info-name">Reparaciones Garantizadas</h3>
+                        <p class="info-description">Uso de repuestos originales y garantía en todos nuestros servicios de reparación.</p>
+                        <div class="info-actions">
+                            <button class="btn btn-secondary">Tipos de Reparación</button>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <img src="images/services/quick-service.jpg" alt="Servicio rápido" class="info-image">
+                        <h3 class="info-name">Entrega Rápida</h3>
+                        <p class="info-description">Minimizamos el tiempo de espera para que tengas tu dispositivo de vuelta lo antes posible.</p>
+                        <div class="info-actions">
+                            <button class="btn btn-secondary">Estado de Reparación</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="appointment-card">
+                    <h4>Agenda tu Cita de Servicio Técnico</h4>
+                    <form class="appointment-form">
+                        <label for="nombreCita">Nombre Completo:</label>
+                        <input type="text" id="nombreCita" name="nombreCita" required placeholder="Tu nombre">
+
+                        <label for="telefonoCita">Teléfono:</label>
+                        <input type="tel" id="telefonoCita" name="telefonoCita" required placeholder="Ej: 3201234567">
+
+                        <label for="emailCita">Email:</label>
+                        <input type="email" id="emailCita" name="emailCita" required placeholder="tu.email@ejemplo.com">
+
+                        <label for="dispositivoCita">Dispositivo y Modelo:</label>
+                        <input type="text" id="dispositivoCita" name="dispositivoCita" required placeholder="Ej: iPhone 12 Pro Max">
+
+                        <label for="problemaCita">Describe el Problema:</label>
+                        <textarea id="problemaCita" name="problemaCita" rows="4" required placeholder="Ej: Pantalla rota, no carga, batería agotada..."></textarea>
+
+                        <label for="fechaCita">Fecha Preferida:</label>
+                        <input type="date" id="fechaCita" name="fechaCita" required>
+
+                        <label for="horaCita">Hora Preferida:</label>
+                        <input type="time" id="horaCita" name="horaCita" required>
+
+                        <button type="submit" class="btn btn-primary">Agendar Cita</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contacto">
+            <div class="container">
+                <h2 class="section-title">Contáctanos</h2>
+                <div class="contact-info-wrapper">
+                    <p><i class="fas fa-map-marker-alt"></i> Popayán, Cauca, Colombia</p>
+                    <p><i class="fas fa-phone"></i> +57 320 123 4567</p>
+                    <p><i class="fas fa-envelope"></i> info@comunicacionesluna.com</p>
+                    <div class="social-media">
+                        <a href="#" target="_blank" aria-label="Facebook de Comunicaciones Luna"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank" aria-label="Instagram de Comunicaciones Luna"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank" aria-label="WhatsApp de Comunicaciones Luna"><i class="fab fa-whatsapp"></i></a>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3>Sobre Nosotros</h3>
+                    <p>En Comunicaciones Luna, somos tu tienda de confianza para celulares y accesorios de última tecnología. Ofrecemos calidad, variedad y el mejor servicio en Popayán.</p>
+                </div>
+                <div class="footer-section links">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#novedades">Novedades</a></li>
+                        <li><a href="#celulares">Celulares</a></li>
+                        <li><a href="#accesorios">Accesorios</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Política de Devoluciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contáctanos</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Popayán, Cauca, Colombia</p>
+                    <p><i class="fas fa-phone"></i> +57 320 123 4567</p>
+                    <p><i class="fas fa-envelope\"></i> info@comunicacionesluna.com</p>
+                    <div class="social-media">
+                        <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/573201234567" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Comunicaciones Luna. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast-container"></div>
+
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
-            <h3>Tu Carrito</h3>
-            <button class="close-btn" id="closeCartBtn" aria-label="Cerrar Carrito"><i class="fas fa-times"></i></button>
+            <h3>Tu Carrito (<span id="cartCountSidebar">0</span>)</h3>
+            <button class="close-btn" id="closeCart" aria-label="Cerrar carrito">&times;</button>
         </div>
         <div class="cart-items" id="cartItems">
-            </div>
+            <p class="cart-empty-message" id="cartEmptyMessage"><i class="fas fa-shopping-cart"></i> Tu carrito está vacío.</p>
+        </div>
         <div class="cart-summary">
-            <p>Total: <span id="cartTotalPrice">$0 COP</span></p>
-            <button class="btn btn-primary btn-checkout" id="checkoutBtn">Comprar por WhatsApp</button>
+            <p>Total: <span id="cartTotalPrice">$0</span></p>
+            <button class="btn btn-checkout btn-checkout-primary" id="checkoutBtn">Finalizar Compra</button>
+            <button class="btn btn-secondary" id="checkoutWhatsappBtn"><i class="fab fa-whatsapp"></i> Finalizar por WhatsApp</button>
         </div>
     </div>
 
-
-    <script type="module" src="js/main.js"></script>
-    </body>
+    <script src="js/main.js"></script>
+    <script src="js/carousel.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/cart.js"></script>
+</body>
 </html>
