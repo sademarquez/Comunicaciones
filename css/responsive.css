@@ -3,12 +3,19 @@
 /* Mobile-First Approach */
 /* Estilos para dispositivos pequeños (hasta 767px de ancho) */
 @media (max-width: 767px) {
+    .container {
+        padding: 0 var(--spacing-sm); /* Menos padding en móviles */
+    }
+
     /* Header */
+    .main-header {
+        padding: var(--spacing-sm) 0;
+    }
     .header-content {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--spacing-sm);
-        padding: var(--spacing-sm);
+        padding: 0 var(--spacing-sm); /* Padding para el contenido del header */
     }
 
     .logo {
@@ -22,7 +29,9 @@
         width: 100%;
         display: none; /* Ocultar por defecto para el menú hamburguesa */
         flex-direction: column;
-        background-color: var(--darker-bg); /* Fondo del menú desplegable */
+        background-color: var(--transparent-overlay); /* Fondo del menú desplegable */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         position: absolute;
         top: 100%; /* Debajo del header */
         left: 0;
@@ -52,7 +61,6 @@
         border-bottom: none;
     }
 
-
     .header-actions {
         width: 100%;
         justify-content: space-between;
@@ -69,6 +77,10 @@
     .search-bar input {
         width: auto; /* Permite que el input se adapte */
         flex-grow: 1;
+        padding: var(--spacing-xs); /* Menos padding en input */
+    }
+    .search-bar button {
+        padding: var(--spacing-xs); /* Menos padding en botón */
     }
 
     .menu-toggle {
@@ -82,30 +94,18 @@
     .carousel-caption {
         padding: var(--spacing-md);
     }
-    .carousel-caption h2 {
-        font-size: 1.8em; /* Tamaño de fuente más pequeño para títulos */
-    }
-    .carousel-caption p {
-        font-size: 0.9em;
-    }
     .carousel-nav {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         font-size: 1.5em;
         padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
     .carousel-dots {
         bottom: var(--spacing-sm);
+        padding: var(--spacing-xs);
     }
     .welcome-message-overlay {
         padding: var(--spacing-md);
-        font-size: 0.9em;
-    }
-    .welcome-message-overlay h2 {
-        font-size: 1.5em;
     }
 
     /* Categorías de Acceso Rápido */
@@ -115,13 +115,6 @@
     .category-card {
         padding: var(--spacing-md);
     }
-    .category-card i {
-        font-size: 2.5em;
-    }
-    .category-card span {
-        font-size: 1.1em;
-    }
-
 
     /* Product and Info Grids */
     .product-grid,
@@ -132,10 +125,12 @@
     .info-card {
         margin: 0 auto; /* Centrar tarjetas */
         max-width: 350px; /* Ancho máximo para tarjetas en móvil */
+        padding: var(--spacing-md);
     }
     .product-actions {
         flex-direction: row; /* Botones en fila para móviles */
         justify-content: center;
+        flex-wrap: wrap; /* Permite que los botones se envuelvan si hay muchos */
     }
     .product-actions .btn {
         width: 48%; /* Ocupan la mitad del ancho */
@@ -150,7 +145,7 @@
         gap: var(--spacing-sm);
     }
     .filters select {
-        width: 80%; /* Ancho para select en móvil */
+        width: 90%; /* Ancho para select en móvil */
         max-width: 300px;
     }
 
@@ -158,26 +153,33 @@
     .appointment-card {
         padding: var(--spacing-md);
     }
-    .appointment-card h4 {
-        font-size: 1.4em;
-    }
 
     /* Brands Section */
     .brands-list {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Más pequeñas */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas para marcas en móvil */
         gap: var(--spacing-md);
     }
     .brand-item {
-        min-width: 100px;
-        max-width: 150px;
+        min-width: unset;
+        max-width: unset;
+        width: 100%;
         padding: var(--spacing-sm);
     }
     .brand-item img {
         width: 60px;
         height: 60px;
     }
-    .brand-item span {
-        font-size: 0.9em;
+
+    /* Contact Section */
+    .contact-info-wrapper {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) auto;
+    }
+    .social-media {
+        gap: var(--spacing-md);
+    }
+    .social-media a {
+        font-size: 2em;
     }
 
     /* Footer */
@@ -213,10 +215,17 @@
         width: 60px;
         height: 60px;
     }
+    .cart-item-quantity button {
+        width: 25px;
+        height: 25px;
+    }
 }
 
 /* Tablet (768px a 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        padding: 0 var(--spacing-lg);
+    }
     .header-content {
         flex-wrap: wrap;
         justify-content: center;
@@ -237,22 +246,22 @@
         justify-content: center;
         gap: var(--spacing-lg);
     }
-
-    .carousel-caption h2 {
-        font-size: 2.5em;
+    .search-bar input {
+        width: 150px; /* Un poco más pequeño en tablet */
     }
-    .carousel-caption p {
-        font-size: 1.1em;
+
+    .hero-section {
+        height: 450px;
     }
 
     .category-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 2 o 3 columnas */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 3 columnas */
         gap: var(--spacing-md);
     }
 
     .product-grid,
     .service-info-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 2 o 3 columnas */
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* 2 o 3 columnas */
         gap: var(--spacing-md);
     }
     .product-card .product-actions {
@@ -264,7 +273,7 @@
     }
 
     .brands-list {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* 3-4 columnas */
         gap: var(--spacing-md);
     }
 
