@@ -1,6 +1,6 @@
 {
-    "siteName": "CelularMania",
-    "contactEmail": "info@celularmania.com",
+    "siteName": "COMUNICACIONES LUNA",
+    "contactEmail": "info@comunicacionesluna.com",
     "contactPhone": "+573201234567",
     "address": "Popayán, Cauca, Colombia",
     "banners": [
@@ -9,15 +9,15 @@
             "title": "¡Novedad! iPhone 15 Pro Max",
             "description": "Experimenta la potencia y la innovación. ¡Disponible ahora!",
             "imageUrl": "images/banners/banner-iphone15.jpg",
-            "link": "#celulares?product=ip15promax",
-            "buttonText": "Ver Detalles"
+            "link": "#celulares-section",
+            "buttonText": "Ver Celulares"
         },
         {
             "id": "banner2",
             "title": "Ofertas Exclusivas de Samsung",
             "description": "Descubre los mejores Galaxy con descuentos increíbles.",
             "imageUrl": "images/banners/banner-samsung.jpg",
-            "link": "#celulares?brand=Samsung",
+            "link": "#celulares-section",
             "buttonText": "Comprar Ahora"
         },
         {
@@ -25,8 +25,16 @@
             "title": "Accesorios Indispensables",
             "description": "Todo lo que necesitas para tu móvil, desde audífonos hasta smartwatches.",
             "imageUrl": "images/banners/banner-accessories.jpg",
-            "link": "#accesorios",
+            "link": "#accesorios-section",
             "buttonText": "Explorar Accesorios"
+        },
+        {
+            "id": "banner4",
+            "title": "Servicio Técnico Profesional",
+            "description": "Reparaciones rápidas y garantizadas para tu dispositivo.",
+            "imageUrl": "images/banners/banner-service.jpg",
+            "link": "#service-tech-section",
+            "buttonText": "Agenda tu Cita"
         }
     ],
     "brands": [
@@ -45,6 +53,14 @@
         {
             "name": "Google",
             "logoUrl": "images/icons/google-logo.svg"
+        },
+        {
+            "name": "OnePlus",
+            "logoUrl": "images/icons/oneplus-logo.svg"
+        },
+        {
+            "name": "Motorola",
+            "logoUrl": "images/icons/motorola-logo.svg"
         }
     ]
 }
