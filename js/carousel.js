@@ -2,92 +2,73 @@
 
 let currentSlide = 0;
 let autoSlideInterval;
-const slideDuration = 5000; // Duración de cada slide en milisegundos
+const slideDuration = 6000; // Duración de cada slide en milisegundos
 
 let carouselTrack;
 let carouselDotsContainer;
 let slides = [];
 let dots = [];
+let carouselPrevBtn;
+let carouselNextBtn;
 
+/**
+ * Inicializa el carrusel con los banners proporcionados.
+ * @param {Array} bannersData - Array de objetos de banners.
+ */
 export function initCarousel(bannersData) {
     carouselTrack = document.getElementById('carouselTrack');
-    const carouselPrevBtn = document.getElementById('carouselPrev');
-    const carouselNextBtn = document.getElementById('carouselNext');
+    carouselPrevBtn = document.getElementById('carouselPrev');
+    carouselNextBtn = document.getElementById('carouselNext');
     carouselDotsContainer = document.getElementById('carouselDots');
 
-    if (!carouselTrack || !carouselDotsContainer) {
+    if (!carouselTrack || !carouselDotsContainer || !carouselPrevBtn || !carouselNextBtn) {
         console.warn('Elementos del carrusel no encontrados. Inicialización abortada.');
         return;
     }
 
-    // Limpiar contenido estático y cargar banners dinámicamente
     carouselTrack.innerHTML = '';
     carouselDotsContainer.innerHTML = '';
+    slides = [];
+    dots = [];
 
     if (bannersData && bannersData.length > 0) {
         bannersData.forEach((banner, index) => {
             const slideElement = createSlideElement(banner);
             carouselTrack.appendChild(slideElement);
+            slides.push(slideElement); // Guardar referencia al elemento creado
 
             const dotElement = createDotElement(index);
+            dotElement.addEventListener('click', () => showSlide(index));
             carouselDotsContainer.appendChild(dotElement);
+            dots.push(dotElement); // Guardar referencia al elemento creado
         });
-        slides = Array.from(carouselTrack.children);
-        dots = Array.from(carouselDotsContainer.children);
+
+        // Configurar botones de navegación
+        carouselPrevBtn.addEventListener('click', showPrev);
+        carouselNextBtn.addEventListener('click', showNext);
 
         // Asegurarse de que el primer slide y dot estén activos al inicio
         updateCarousel();
         startAutoSlide();
     } else {
-        console.warn('No se encontraron datos de banners para el carrusel.');
-        // Puedes dejar un slide de placeholder o ocultar el carrusel
+        console.warn('No se encontraron datos de banners para el carrusel. Carrusel deshabilitado.');
+        // Ocultar el carrusel si no hay banners
+        const heroSection = document.getElementById('hero');
+        if (heroSection) heroSection.style.display = 'none';
     }
-
-    carouselPrevBtn.addEventListener('click', () => {
-        clearInterval(autoSlideInterval);
-        showSlide(currentSlide - 1);
-        startAutoSlide();
-    });
-
-    carouselNextBtn.addEventListener('click', () => {
-        clearInterval(autoSlideInterval);
-        showSlide(currentSlide + 1);
-        startAutoSlide();
-    });
-
-    carouselDotsContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('dot')) {
-            clearInterval(autoSlideInterval);
-            const index = dots.indexOf(e.target);
-            showSlide(index);
-            startAutoSlide();
-        }
-    });
-
-    // Swipe en móviles (opcional, requiere más lógica)
-    // let touchStartX = 0;
-    // carouselTrack.addEventListener('touchstart', (e) => {
-    //     touchStartX = e.touches[0].clientX;
-    // });
-    // carouselTrack.addEventListener('touchend', (e) => {
-    //     const touchEndX = e.changedTouches[0].clientX;
-    //     if (touchEndX < touchStartX - 50) { // Swipe left
-    //         clearInterval(autoSlideInterval);
-    //         showSlide(currentSlide + 1);
-    //         startAutoSlide();
-    //     } else if (touchEndX > touchStartX + 50) { // Swipe right
-    //         clearInterval(autoSlideInterval);
-    //         showSlide(currentSlide - 1);
-    //         startAutoSlide();
-    //     }
-    // });
 }
 
+/**
+ * Crea un elemento de slide para el carrusel.
+ * @param {object} banner - Objeto con datos del banner.
+ * @returns {HTMLElement}
+ */
 function createSlideElement(banner) {
     const slide = document.createElement('div');
     slide.classList.add('carousel-slide');
     slide.style.backgroundImage = `url(${banner.imageUrl})`; // Carga la imagen como fondo CSS
-
+    
+    // Contenido del slide (título, descripción, botón)
     const caption = document.createElement('div');
     caption.classList.add('carousel-caption');
 
@@ -99,7 +80,7 @@ function createSlideElement(banner) {
 
     const button = document.createElement('a');
     button.href = banner.link;
-    button.classList.add('btn-primary');
+    button.classList.add('btn', 'btn-primary'); // Clases para el botón
     button.textContent = banner.buttonText || 'Ver Más';
 
     caption.appendChild(title);
@@ -110,7 +91,11 @@ function createSlideElement(banner) {
     return slide;
 }
 
-
+/**
+ * Crea un elemento de punto de navegación para el carrusel.
+ * @param {number} index
+ * @returns {HTMLElement}
+ */
 function createDotElement(index) {
     const dot = document.createElement('span');
     dot.classList.add('dot');
@@ -118,8 +103,15 @@ function createDotElement(index) {
     return dot;
 }
 
+/**
+ * Muestra un slide específico por índice.
+ * @param {number} index
+ */
 function showSlide(index) {
     if (slides.length === 0) return;
+
+    // Detener el auto-slide al interactuar manualmente
+    stopAutoSlide();
 
     if (index >= slides.length) {
         currentSlide = 0;
@@ -129,16 +121,23 @@ function showSlide(index) {
         currentSlide = index;
     }
 
+    // Calcula el desplazamiento basado en el porcentaje (100% por slide)
     const offset = -currentSlide * 100;
     carouselTrack.style.transform = `translateX(${offset}%)`;
 
     updateCarousel();
+
+    // Reiniciar el auto-slide después de un breve retraso
+    startAutoSlide();
 }
 
+/**
+ * Actualiza las clases 'active' para slides y puntos de navegación.
+ */
 function updateCarousel() {
     slides.forEach((slide, index) => {
         if (index === currentSlide) {
-            slide.classList.add('active'); // Opcional, para aplicar estilos a la slide activa
+            slide.classList.add('active');
         } else {
             slide.classList.remove('active');
         }
@@ -153,8 +152,31 @@ function updateCarousel() {
     });
 }
 
+/**
+ * Muestra el siguiente slide.
+ */
+function showNext() {
+    showSlide(currentSlide + 1);
+}
+
+/**
+ * Muestra el slide anterior.
+ */
+function showPrev() {
+    showSlide(currentSlide - 1);
+}
+
+/**
+ * Inicia el auto-slide del carrusel.
+ */
 function startAutoSlide() {
-    autoSlideInterval = setInterval(() => {
-        showSlide(currentSlide + 1);
-    }, slideDuration);
+    stopAutoSlide(); // Asegurarse de que no haya múltiples intervalos
+    autoSlideInterval = setInterval(showNext, slideDuration);
+}
+
+/**
+ * Detiene el auto-slide del carrusel.
+ */
+function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
 }
